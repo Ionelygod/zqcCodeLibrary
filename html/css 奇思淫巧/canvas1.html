@@ -2,9 +2,33 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>$Title$</title>
+  <title>canvas1</title>
 </head>
 <body>
-$END$
+<div id="imgWrapper" style="height: 2000px;">
+  <canvas style="position: fixed;top: 0;" id="canvas" height="341" width="544"></canvas>
+</div>
 </body>
+
+<script type="text/javascript">
+  var Mycanvas = document.getElementById("canvas");
+    var context = Mycanvas.getContext("2d");
+    var img1 = document.createElement('img');
+    img1.src = '../../assets/mac1.jpg';
+    var img2 = document.createElement('img');
+    img2.src = '../../assets/mac2.jpg';
+
+  // 开始动画的滚动距离
+  // startOpen
+  startOpen = document.getElementById("imgWrapper").offsetTop - (window.innerHeight / 2 - document.getElementById("imgWrapper").offsetHeight / 2);
+
+
+
+
+  function drawImage() {
+    context.drawImage(img1, 0, 0, 2048, 1024, 0, 0, 544, 341);
+    context.drawImage(img2, 0, startOpen / 1024 * 341, 2048, 1024, 0, startOpen, 544, 341);
+  }
+  drawImage()
+</script>
 </html>

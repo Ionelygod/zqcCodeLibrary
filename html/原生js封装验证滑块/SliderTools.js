@@ -174,11 +174,65 @@
   }
   proto.bindEvents = function () {
     var self = this;
-    self.handler.onmousedown = function (e) {
-      self.diffX = e.clientX - self.handler.offsetLeft;
-      util.setClassName(self.slider, 'unselect');
-      document.onmousemove = function (e) {
-        let deltaX = e.clientX - self.diffX;
+    var sUserAgent = navigator.userAgent.toLowerCase();
+    var bIsIpad = sUserAgent.match(/ipad/i) == "ipad";
+    var bIsIphoneOs = sUserAgent.match(/iphone os/i) == "iphone os";
+    var bIsMidp = sUserAgent.match(/midp/i) == "midp";
+    var bIsUc7 = sUserAgent.match(/rv:1.2.3.4/i) == "rv:1.2.3.4";
+    var bIsUc = sUserAgent.match(/ucweb/i) == "ucweb";
+    var bIsAndroid = sUserAgent.match(/android/i) == "android";
+    var bIsCE = sUserAgent.match(/windows ce/i) == "windows ce";
+    var bIsWM = sUserAgent.match(/windows mobile/i) == "windows mobile";
+    if (!(bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM)) {
+      self.handler.onmousedown = function (e) {
+        self.diffX = e.clientX - self.handler.offsetLeft;
+        util.setClassName(self.slider, 'unselect');
+        document.onmousemove = function (e) {
+          let deltaX = e.clientX - self.diffX;
+          if (deltaX >= self.slider.offsetWidth - self.handler.offsetWidth) {
+            deltaX = self.slider.offsetWidth - self.handler.offsetWidth;
+            self.flag = true;
+          } else if (deltaX <= 0) {
+            deltaX = 0;
+            self.flag = false;
+          } else {
+            self.flag = false;
+          }
+          util.setInlineStyle([self.handler], 'left', deltaX + 'px');
+          util.setInlineStyle([self.drag_bg], 'width', deltaX + 'px');
+        }
+        document.onmouseup = function (e) {
+          util.setClassName(self.slider, '')
+          if (self.flag) {
+            util.setClassName(self.slider, 'slide_ok')
+            util.addClass(self.handler, 'handler_ok_bg')
+            self.handler.onmousedown = null
+            self.emit('complete')
+          } else {
+            util.setInlineStyle([self.handler], 'left', 0 + 'px');
+            util.setInlineStyle([self.drag_bg], 'width', 0 + 'px');
+          }
+          document.onmousemove = null;
+          document.onmouseup = null;
+        }
+      }
+    }else{
+      self.handler.addEventListener("touchstart",touchstart,false)
+      function touchstart (e) {
+        console.log("start")
+        if(self.flag){
+          self.handler.removeEventListener("touchstart",touchstart,false)
+          return false
+        }
+        else {
+          self.diffX = e.targetTouches[0].clientX - self.handler.offsetLeft;
+          util.setClassName(self.slider, 'unselect');
+          self.handler.addEventListener("touchmove", touchmove, false)
+        }
+      }
+      function touchmove(e) {
+        console.log("move");
+        let deltaX = e.targetTouches[0].clientX - self.diffX;
         if (deltaX >= self.slider.offsetWidth - self.handler.offsetWidth) {
           deltaX = self.slider.offsetWidth - self.handler.offsetWidth;
           self.flag = true;
@@ -191,19 +245,21 @@
         util.setInlineStyle([self.handler], 'left', deltaX + 'px');
         util.setInlineStyle([self.drag_bg], 'width', deltaX + 'px');
       }
-      document.onmouseup = function (e) {
+      document.addEventListener("touchend",touchend,false)
+      function touchend(){
         util.setClassName(self.slider, '')
         if (self.flag) {
           util.setClassName(self.slider, 'slide_ok')
           util.addClass(self.handler, 'handler_ok_bg')
-          self.handler.onmousedown = null
           self.emit('complete')
+          self.handler.removeEventListener("touchstart",touchstart,false)
+          self.handler.removeEventListener("touchmove",touchmove,false)
+          document.removeEventListener("touchend",touchend,false)
+          self.handler.onmousedown = null
         } else {
           util.setInlineStyle([self.handler], 'left', 0 + 'px');
           util.setInlineStyle([self.drag_bg], 'width', 0 + 'px');
         }
-        document.onmousemove = null;
-        document.onmouseup = null;
       }
     }
   }
@@ -216,8 +272,3 @@
     root.SliderTools = SliderTools;
   }
 }());
-
-let slider = new SliderTools();
-slider.on('complete',() => {
-  alert('验证完成');
-})

@@ -1,0 +1,23 @@
+{
+  "name": "zqccodelibrary",
+  "version": "1.0.0",
+  "description": "zqcCodeLibrary ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ionelygod/zqcCodeLibrary.git"
+  },
+  "keywords": [
+    "Code",
+    "library"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ionelygod/zqcCodeLibrary/issues"
+  },
+  "homepage": "https://github.com/Ionelygod/zqcCodeLibrary#readme"
+}
