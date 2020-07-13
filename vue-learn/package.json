@@ -10,7 +10,9 @@
   "dependencies": {
     "core-js": "^3.6.5",
     "tesseract.js": "^2.1.1",
-    "vue": "^2.6.11"
+    "vue": "^2.6.11",
+    "vue-class-component": "^7.2.3",
+    "vue-property-decorator": "^8.4.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.4.0",
@@ -19,6 +21,11 @@
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
+    "ts-loader": "^7.0.5",
+    "tslint": "^6.1.2",
+    "tslint-config-standard": "^9.0.0",
+    "tslint-loader": "^3.5.4",
+    "typescript": "^3.9.5",
     "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {
