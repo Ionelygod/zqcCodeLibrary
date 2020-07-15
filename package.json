@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/Ionelygod/zqcCodeLibrary/issues"
   },
-  "homepage": "https://github.com/Ionelygod/zqcCodeLibrary#readme"
+  "homepage": "https://github.com/Ionelygod/zqcCodeLibrary#readme",
+  "devDependencies": {
+    "babel-plugin-transform-remove-console": "^6.9.4"
+  }
 }
