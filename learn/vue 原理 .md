@@ -14,5 +14,27 @@ getter,在数据变动时发布消息给订阅者,触发响应的监听回调。
 视图更新;视图交互变化(input)-> 数据model变更的双向绑定效果。
 ```
 vue 初始化页面闪动
-使用vue开发 
+使用vue开发,在初始化之前,由于div是不归vue管的, 所以我们写的代码在还没有解析的情况下容易出现  
+花屏现象,看到类似于{{message}}的字样,虽然一般情况下这个时间很短暂,但是我们还是有必要解决一下这个问题  
+首先在css中加上以下代码
+```css
+[v-cloak]{
+display: none;
+}
+```
+如果没有解决问题,则在根元素上加上style="display:none;" :style="{display:'block'}"
+
+在使用vuex的情况下, 组件重复使用mutation
+使用 mapMutations辅助函数,在组件中这么使用
+```vuejs
+`<script>
+import {mapMutations} from 'vuex'
+methods:{
+  ...mapMutations({
+  setNumber:'SET_NUMBER'
+  })
+}
+</script>`
+```
+
 
