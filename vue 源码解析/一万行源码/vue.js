@@ -129,7 +129,7 @@
   }
   
   /**
-   * Check if a tag is a built-in tag.
+   * Check if a tag is  a  built-in tag.
    */
   var isBuiltInTag = makeMap('slot,component', true);
   
