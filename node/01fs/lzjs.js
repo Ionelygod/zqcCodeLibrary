@@ -19,7 +19,18 @@ function fsWrite(url,content) {
     })
   })
 }
+function mkdirPath (path){
+  return new Promise((resolve, reject) => {
+    fs.mkdir(path, { recursive: true }, (err) => {
+      if (err) reject(err);
+      else {
+        console.log("创建完成")
+      }
+    });
+  })
+}
 module.exports = {
   fsRead,
-  fsWrite
+  fsWrite,
+  mkdirPath
 }

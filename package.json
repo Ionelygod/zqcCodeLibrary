@@ -22,5 +22,9 @@
   "homepage": "https://github.com/Ionelygod/zqcCodeLibrary#readme",
   "devDependencies": {
     "babel-plugin-transform-remove-console": "^6.9.4"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "cheerio": "^1.0.0-rc.3"
   }
 }
